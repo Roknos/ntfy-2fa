@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import prompt from "prompt-sync";
+import settings from "./settings.json";
 const con = prompt();
 
 // Function that returns a random 8character long string
@@ -8,14 +9,13 @@ function genCode() {
 }
 
 const code = genCode();
-const Topic = "RoknosTestNotification";
 
 function sendNotification() {
   return new Promise(async (resolve, reject) => {
     await fetch("https://ntfy.sh", {
       method: "Post",
       body: JSON.stringify({
-        topic: `${Topic}`,
+        topic: settings.topic,
         title: `Your 2FA code`,
         message: `The code is ${code}`,
       }),
